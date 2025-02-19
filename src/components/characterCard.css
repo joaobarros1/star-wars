@@ -1,5 +1,7 @@
-.card {
-    background-color: #fff;
+.character-card {
+    height: 200px;
+    width: 200px;
+    background-color: black;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -8,16 +10,26 @@
     transition: box-shadow 0.3s ease;
 }
 
-.card:hover {
+.character-card:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.card-title {
+.character-card-title {
+    height: 20px;
+    width: 100%;
     font-size: 1.5em;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.character-card-image {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
     margin-bottom: 8px;
 }
 
-.card-content {
+.character-card-details {
     font-size: 1em;
-    color: #333;
+    color: #fff;
 }
