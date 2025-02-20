@@ -103,8 +103,11 @@ section {
     display: block;
 }
 body {
+    font-family: "Star Jedi", sans-serif;
     line-height: 1;
-    background-color: black;
+    background-color: darkslategrey;
+    color: #ccc;
+    font-style: italic;
 }
 ol,
 ul {
@@ -124,4 +127,9 @@ q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+@font-face {
+    font-family: "Star Jedi";
+    src: url("/assets/fonts/Starjedi.ttf") format("truetype");
 }

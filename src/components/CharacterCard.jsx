@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./characterCard.css";
 import PropTypes from "prop-types";
 import Modal from "./Modal";
@@ -44,4 +44,4 @@ CharacterCard.propTypes = {
     onCardClick: PropTypes.func.isRequired,
 };
 
-export default CharacterCard;
+export default memo(CharacterCard);

@@ -1,5 +1,6 @@
-import "./Loader.css";
+import { memo } from "react";
 import loaderIconUrl from "../assets/loader.svg";
+import "./Loader.css";
 
 const Loader = () => {
     return (
@@ -9,4 +10,4 @@ const Loader = () => {
     );
 };
 
-export default Loader;
+export default memo(Loader);

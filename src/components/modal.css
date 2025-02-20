@@ -5,12 +5,12 @@
     transform: translate(-50%, -50%);
     width: 80%;
     max-width: 500px;
-    background-color: white;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     padding: 20px;
     border-radius: 8px;
-    background-color: grey;
+    border: 1px solid rgba(0, 255, 191, 0.6);
+    background-color: rgb(1, 28, 10);
+    cursor: default;
 }
 
 .modal-header {
@@ -31,6 +31,7 @@
     border: none;
     font-size: 1.5em;
     cursor: pointer;
+    color: #ccc;
 }
 
 .modal-body {
@@ -39,7 +40,7 @@
 
 .modal-footer {
     display: flex;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     border-top: 1px solid black;
     padding-top: 10px;
 }
