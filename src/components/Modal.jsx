@@ -107,13 +107,13 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
 
     return (
         <div className="modal">
-            <div className="modal-header">
+            <section className="modal-header">
                 <button className="modal-close" onClick={handleCloseModal}>
                     &times;
                 </button>
                 <h1 className="modal-title">{character.name}</h1>
-            </div>
-            <div className="modal-body">
+            </section>
+            <section className="modal-body">
                 <div>
                     {loading ? (
                         <Loader />
@@ -129,11 +129,11 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
                         )
                     )}
                 </div>
-            </div>
-            <div className="modal-footer">
+            </section>
+            <section className="modal-footer">
                 <div className="character-details">{characterDetails}</div>
                 <div className="planet-details">{planetDetails}</div>
-            </div>
+            </section>
         </div>
     );
 };
