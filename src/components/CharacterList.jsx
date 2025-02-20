@@ -1,46 +1,54 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import CharacterCard from "./CharacterCard";
 import "./characterList.css";
 import Loader from "./Loader";
+import Modal from "./Modal";
+import { DataContext } from "../context/DataContext";
+import Search from "./Search";
+import Pagination from "./Pagination";
 
 const charactersPerPage = 10;
 
 const CharacterList = () => {
+    const { characters, setCharacters } = useContext(DataContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const { data, loading, error } = useFetch(
-        `https://swapi.dev/api/people/?page=${currentPage}`
-    );
-    const [characters, setCharacters] = useState([]);
+    const {
+        data: fetchData,
+        loading,
+        error,
+    } = useFetch(`https://swapi.dev/api/people/?page=${currentPage}`);
     const [activeCharacter, setActiveCharacter] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleCardClick = (character) => {
         setActiveCharacter(character);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
     };
 
     useEffect(() => {
-        if (data) {
-            setCharacters(data.results);
-            setTotalPages(Math.ceil(data.count / charactersPerPage));
+        if (fetchData) {
+            setTotalPages(Math.ceil(fetchData.count / charactersPerPage));
+            setCharacters(fetchData.results);
         }
-    }, [data]);
+    }, [fetchData, setCharacters]);
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
+    const handleSearch = (query) => {
+        const filteredData = fetchData.results.filter((character) =>
+            character.name.toLowerCase().includes(query.toLowerCase())
+        );
+        setCharacters(filteredData);
     };
 
     return (
         <div className="character-list-container">
-            <h1 className="list-title">Star Wars Characters</h1>
+            <h1 className="list-title">Star Wars</h1>
+            <Search onSearch={handleSearch} />
             <section className="character-list">
                 {loading ? (
                     <Loader />
@@ -51,29 +59,26 @@ const CharacterList = () => {
                         <CharacterCard
                             key={character.name}
                             character={character}
-                            isActive={activeCharacter === character}
-                            onCardClick={() => handleCardClick(character)}
+                            onCardClick={handleCardClick}
                         />
                     ))
                 )}
             </section>
-            <section className="pagination">
-                <button
-                    onClick={handlePreviousPage}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                <span>
-                    Page {currentPage} of {totalPages}
-                </span>
-                <button
-                    onClick={handleNextPage}
-                    disabled={currentPage === totalPages}
-                >
-                    Next
-                </button>
-            </section>
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+            />
+            {isModalOpen && activeCharacter && (
+                <Modal
+                    onOpen={isModalOpen}
+                    character={activeCharacter}
+                    characterImageUrl={`https://starwars-databank-server.vercel.app/api/v1/characters/name/${encodeURIComponent(
+                        activeCharacter.name
+                    )}`}
+                    onClose={handleCloseModal}
+                />
+            )}
         </div>
     );
 };

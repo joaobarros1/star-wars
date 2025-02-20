@@ -1,29 +1,41 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import {
+    memo,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+    // useContext,
+    useRef,
+} from "react";
 import useFetch from "../hooks/useFetch";
 import Loader from "./Loader";
 import "./modal.css";
 import PropTypes from "prop-types";
 import starwarsLogo from "../assets/logo-placeholder.jpeg";
+// import { DataContext } from "../context/DataContext";
 
-const Modal = ({ onOpen, character, characterImageUrl }) => {
+const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
+    // const { planets, setPlanets } = useContext(DataContext);
     const { data, loading, error } = useFetch(characterImageUrl);
     const [imageUrl, setImageUrl] = useState(null);
-    const [showModal, setshowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [planet, setPlanet] = useState(null);
+    const ref = useRef(null);
 
-    console.log("character: ", character);
+    console.log("ref: ", ref.current);
 
     useEffect(() => {
-        if (onOpen) {
-            setshowModal(true);
+        if (onOpen && character) {
+            setShowModal(true);
         }
-    }, [onOpen]);
+    }, [onOpen, character]);
 
     const fetchPlanetInfo = useCallback(async () => {
         const planetUrl = character.homeworld;
         const response = await fetch(planetUrl);
         const planet = await response.json();
         setPlanet(planet);
+        // setPlanets((prevPlanets) => [...prevPlanets, planet]);
         console.log("planet: ", planet);
     }, [character.homeworld]);
 
@@ -37,14 +49,15 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
     }, [data, loading, error, fetchPlanetInfo]);
 
     const handleCloseModal = useCallback(() => {
-        setshowModal(false);
-    }, []);
+        setShowModal(false);
+        onClose();
+    }, [onClose]);
 
     useEffect(() => {
         if (!showModal) return;
         const handleEscapeKeyPress = (event) => {
             if (event.key === "Escape") {
-                setshowModal(false);
+                handleCloseModal();
             }
         };
 
@@ -53,7 +66,7 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
         return () => {
             document.removeEventListener("keydown", handleEscapeKeyPress);
         };
-    }, [showModal]);
+    }, [showModal, handleCloseModal]);
 
     const characterDetails = useMemo(() => {
         const numberOfFilms = character.films?.length || 0;
@@ -66,7 +79,7 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
             "birth_year",
         ];
         return (
-            <section>
+            <section className="character-details">
                 {attributes.map((attr) => (
                     <div key={attr}>
                         <span>
@@ -89,7 +102,7 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
         const planetName = planet?.name;
         const attributes = ["terrain", "climate", "population"];
         return (
-            <section>
+            <section className="planet-details">
                 <span>Homeworld: {planetName}</span>
                 {attributes.map((attr) => (
                     <div key={attr}>
@@ -105,42 +118,52 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
 
     if (!showModal) return null;
 
+    const handleBackdropClick = (e) => {
+        if (e.target.className === "modal-backdrop") {
+            handleCloseModal();
+        }
+    };
+
     return (
-        <div className="modal">
-            <section className="modal-header">
-                <button className="modal-close" onClick={handleCloseModal}>
-                    &times;
-                </button>
-                <h1 className="modal-title">{character.name}</h1>
-            </section>
-            <section className="modal-body">
-                <div>
-                    {loading ? (
-                        <Loader />
-                    ) : error ? (
-                        <div>Error: {error.message}</div>
-                    ) : (
-                        imageUrl && (
-                            <img
-                                src={imageUrl}
-                                alt={character.name}
-                                className="character-image"
-                            />
-                        )
-                    )}
+        <div className="modal-backdrop" onClick={handleBackdropClick}>
+            <div className="modal" ref={ref}>
+                <div className="modal-header">
+                    <button className="modal-close" onClick={handleCloseModal}>
+                        &times;
+                    </button>
+                    <h1 className="modal-title">{character.name}</h1>
                 </div>
-            </section>
-            <section className="modal-footer">
-                <div className="character-details">{characterDetails}</div>
-                <div className="planet-details">{planetDetails}</div>
-            </section>
+                <div className="modal-body">
+                    <div>
+                        {loading ? (
+                            <Loader />
+                        ) : error ? (
+                            <div>Error: {error.message}</div>
+                        ) : (
+                            imageUrl && (
+                                <img
+                                    src={imageUrl}
+                                    alt={character.name}
+                                    className="character-image"
+                                />
+                            )
+                        )}
+                    </div>
+                </div>
+                <div className="modal-footer">
+                    {characterDetails}
+                    {planetDetails}
+                </div>
+            </div>
         </div>
     );
 };
+
 Modal.propTypes = {
     onOpen: PropTypes.bool.isRequired,
     character: PropTypes.object,
     characterImageUrl: PropTypes.string,
+    onClose: PropTypes.func.isRequired,
 };
 
 export default memo(Modal);

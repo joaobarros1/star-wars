@@ -3,13 +3,16 @@
     flex-direction: column;
     align-items: space-between;
     text-align: center;
-    padding: 10px;
-    min-height: calc(100vh - 20px);
+    padding: 20px 10px 10px 10px;
+    min-height: calc(100vh - 30px);
 }
 
 .list-title {
     font-size: 2rem;
     margin-bottom: 20px;
+    color: #ffe81f;
+    text-shadow: 2px 2px 0 #000, 4px 4px 0 #000, 6px 6px 0 #000;
+    letter-spacing: 2px;
 }
 
 .character-list {

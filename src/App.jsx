@@ -1,7 +1,12 @@
+import { DataProvider } from "./context/DataContext";
 import CharacterList from "./components/CharacterList";
 
 function App() {
-    return <CharacterList />;
+    return (
+        <DataProvider>
+            <CharacterList />
+        </DataProvider>
+    );
 }
 
 export default App;
