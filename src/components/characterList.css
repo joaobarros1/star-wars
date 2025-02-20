@@ -1,18 +1,36 @@
 .character-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
     text-align: center;
+    padding: 10px;
+    min-height: calc(100vh - 20px);
+}
+
+.list-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
 
 .character-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+    .character-list {
+        max-width: 100%;
+    }
 }
 
 .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: auto;
 }
 
 .pagination button {

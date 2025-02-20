@@ -4,6 +4,8 @@ import CharacterCard from "./CharacterCard";
 import "./characterList.css";
 import Loader from "./Loader";
 
+const charactersPerPage = 10;
+
 const CharacterList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -20,7 +22,7 @@ const CharacterList = () => {
     useEffect(() => {
         if (data) {
             setCharacters(data.results);
-            setTotalPages(Math.ceil(data.count / 10)); // Assuming 10 characters per page
+            setTotalPages(Math.ceil(data.count / charactersPerPage));
         }
     }, [data]);
 
@@ -38,7 +40,7 @@ const CharacterList = () => {
 
     return (
         <div className="character-list-container">
-            <h1>Star Wars Characters</h1>
+            <h1 className="list-title">Star Wars Characters</h1>
             <section className="character-list">
                 {loading ? (
                     <Loader />

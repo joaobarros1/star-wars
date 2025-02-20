@@ -3,7 +3,7 @@ import useFetch from "../hooks/useFetch";
 import Loader from "./Loader";
 import "./modal.css";
 import PropTypes from "prop-types";
-import starwarsLogo from "../assets/starwarsLogo.png";
+import starwarsLogo from "../assets/logo-placeholder.jpeg";
 
 const Modal = ({ onOpen, character, characterImageUrl }) => {
     const { data, loading, error } = useFetch(characterImageUrl);
