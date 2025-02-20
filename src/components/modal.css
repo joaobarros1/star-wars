@@ -50,3 +50,11 @@
     max-height: 100%;
     border-radius: 8px;
 }
+
+.character-details {
+    width: 50%;
+}
+
+.planet-details {
+    width: 50%;
+}

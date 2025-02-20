@@ -9,6 +9,7 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
     const { data, loading, error } = useFetch(characterImageUrl);
     const [imageUrl, setImageUrl] = useState(null);
     const [showModal, setshowModal] = useState(false);
+    const [planet, setPlanet] = useState(null);
 
     console.log("character: ", character);
 
@@ -18,13 +19,22 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
         }
     }, [onOpen]);
 
+    const fetchPlanetInfo = useCallback(async () => {
+        const planetUrl = character.homeworld;
+        const response = await fetch(planetUrl);
+        const planet = await response.json();
+        setPlanet(planet);
+        console.log("planet: ", planet);
+    }, [character.homeworld]);
+
     useEffect(() => {
         if (data && !loading) {
             setImageUrl(data[0]?.image || starwarsLogo);
+            fetchPlanetInfo();
         } else if (!loading && error) {
             setImageUrl(starwarsLogo);
         }
-    }, [data, loading, error]);
+    }, [data, loading, error, fetchPlanetInfo]);
 
     const handleCloseModal = useCallback(() => {
         setshowModal(false);
@@ -56,30 +66,42 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
             "birth_year",
         ];
         return (
-            <div className="character-details">
+            <section>
                 {attributes.map((attr) => (
-                    <div key={attr} className="character-details-item">
-                        <span className="character-details-label">
+                    <div key={attr}>
+                        <span>
                             {attr.charAt(0).toUpperCase() +
                                 attr.slice(1).replace("_", " ")}
                             :{" "}
                         </span>
-                        <span className="character-details-value">
-                            {character[attr]}
-                        </span>
+                        <span>{character[attr]}</span>
                     </div>
                 ))}
-                <div className="character-details-item">
-                    <span className="character-details-label">
-                        Number of films:
-                    </span>
-                    <span className="character-details-value">
-                        {numberOfFilms}
-                    </span>
+                <div>
+                    <span>Number of films:</span>
+                    <span>{numberOfFilms}</span>
                 </div>
-            </div>
+            </section>
         );
     }, [character]);
+
+    const planetDetails = useMemo(() => {
+        const planetName = planet?.name;
+        const attributes = ["terrain", "climate", "population"];
+        return (
+            <section>
+                <span>Homeworld: {planetName}</span>
+                {attributes.map((attr) => (
+                    <div key={attr}>
+                        <span>
+                            {attr.charAt(0).toUpperCase() + attr.slice(1)}:{" "}
+                        </span>
+                        <span>{planet && planet[attr]}</span>
+                    </div>
+                ))}
+            </section>
+        );
+    }, [planet]);
 
     if (!showModal) return null;
 
@@ -92,7 +114,7 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
                 <h1 className="modal-title">{character.name}</h1>
             </div>
             <div className="modal-body">
-                <div className="character-details">
+                <div>
                     {loading ? (
                         <Loader />
                     ) : error ? (
@@ -108,7 +130,10 @@ const Modal = ({ onOpen, character, characterImageUrl }) => {
                     )}
                 </div>
             </div>
-            <div className="modal-footer">{characterDetails}</div>
+            <div className="modal-footer">
+                <div className="character-details">{characterDetails}</div>
+                <div className="planet-details">{planetDetails}</div>
+            </div>
         </div>
     );
 };
