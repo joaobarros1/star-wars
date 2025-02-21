@@ -6,14 +6,14 @@ import Modal from "./Modal";
 import { DataContext } from "../context/DataContext";
 import Search from "./Search";
 import Pagination from "./Pagination";
-import Filters from "./Filters";
+// import Filters from "./Filters";
 import "./characterList.css";
 
 const charactersPerPage = 10;
 
 const CharacterList = () => {
     const { characters, setCharacters } = useContext(DataContext);
-    const { planets, setPlanets } = useContext(DataContext);
+    // const { planets, setPlanets } = useContext(DataContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const {
@@ -21,10 +21,9 @@ const CharacterList = () => {
         loading,
         error,
     } = useFetch(`https://swapi.dev/api/people/?page=${currentPage}`);
-    const { data: planetsData } = useFetch(`https://swapi.dev/api/planets/`);
+    // const { data: planetsData } = useFetch(`https://swapi.dev/api/planets/`);
     const [activeCharacter, setActiveCharacter] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [filteredCharacters, setFilteredCharacters] = useState([]);
 
     useEffect(() => {
         if (charactersData) {
@@ -33,12 +32,11 @@ const CharacterList = () => {
         }
     }, [charactersData, setCharacters]);
 
-    useEffect(() => {
-        if (planetsData) {
-            setPlanets(planetsData.results);
-        }
-        // console.log("Planets data:", planetsData);
-    }, [planetsData, setPlanets]);
+    // useEffect(() => {
+    //     if (planetsData) {
+    //         setPlanets(planetsData.results);
+    //     }
+    // }, [planetsData, setPlanets]);
 
     const handleCardClick = (character) => {
         setActiveCharacter(character);
@@ -56,29 +54,31 @@ const CharacterList = () => {
         setCharacters(filteredData);
     };
 
-    const handleFilterChange = (planetName) => {
-        if (planetName === "") {
-            setFilteredCharacters(characters);
-        } else {
-            const filteredData = characters.filter(
-                (character) => character.homeworld === planetName
-            );
-            setFilteredCharacters(filteredData);
-        }
-    };
+    // const handleFilterChange = (planetName) => {
+    //     if (planetName === "") {
+    //         setFilteredCharacters(characters);
+    //     } else {
+    //         const filteredData = characters.filter(
+    //             (character) => character.homeworld === planetName
+    //         );
+    //         // console.log("Filtered data:", filteredData);
+    //         // console.log("Characters:", characters);
+    //         setFilteredCharacters(filteredData);
+    //     }
+    // };
 
     return (
         <div className="character-list-container">
             <h1 className="list-title">Star Wars</h1>
             <Search onSearch={handleSearch} />
-            <Filters planets={planets} onFilterChange={handleFilterChange} />
+            {/* <Filters planets={planets} onFilterChange={handleFilterChange} /> */}
             <section className="character-list">
                 {loading ? (
                     <Loader />
                 ) : error ? (
                     <p>Error: Failed retrieving characters</p>
                 ) : (
-                    filteredCharacters.map((character) => (
+                    characters.map((character) => (
                         <CharacterCard
                             key={character.name}
                             character={character}
