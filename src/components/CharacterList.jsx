@@ -37,7 +37,7 @@ const CharacterList = () => {
         if (planetsData) {
             setPlanets(planetsData.results);
         }
-        console.log("Planets data:", planetsData);
+        // console.log("Planets data:", planetsData);
     }, [planetsData, setPlanets]);
 
     const handleCardClick = (character) => {
