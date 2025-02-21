@@ -5,7 +5,6 @@ import {
     useMemo,
     useState,
     // useContext,
-    useRef,
 } from "react";
 import useFetch from "../hooks/useFetch";
 import Loader from "./Loader";
@@ -20,9 +19,6 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
     const [imageUrl, setImageUrl] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [planet, setPlanet] = useState(null);
-    const ref = useRef(null);
-
-    console.log("ref: ", ref.current);
 
     useEffect(() => {
         if (onOpen && character) {
@@ -36,7 +32,6 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
         const planet = await response.json();
         setPlanet(planet);
         // setPlanets((prevPlanets) => [...prevPlanets, planet]);
-        console.log("planet: ", planet);
     }, [character.homeworld]);
 
     useEffect(() => {
