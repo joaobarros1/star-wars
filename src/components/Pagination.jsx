@@ -1,12 +1,16 @@
 import { PropTypes } from "prop-types";
 import "./pagination.css";
+import { useContext } from "react";
+import { DataContext } from "../context/DataContext";
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = () => {
+    const { currentPage, setCurrentPage, totalPages } = useContext(DataContext);
+
     return (
         <div className="pagination">
             <button
                 className="pagination-btn"
-                onClick={() => onPageChange(currentPage - 1)}
+                onClick={() => setCurrentPage(prevPage => prevPage - 1)}
                 disabled={currentPage === 1}
             >
                 Prev
@@ -16,7 +20,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             </span>
             <button
                 className="pagination-btn"
-                onClick={() => onPageChange(currentPage + 1)}
+                onClick={() => setCurrentPage(prevPage => prevPage + 1)}
                 disabled={currentPage === totalPages}
             >
                 Next

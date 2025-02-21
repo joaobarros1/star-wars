@@ -20,15 +20,6 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
     // const { planets } = useContext(DataContext);
     const [planet, setPlanet] = useState(null);
 
-    console.log("modal", planet);
-
-    // useEffect(() => {
-    //     console.log("Modal component mounted");
-    //     return () => {
-    //         console.log("Modal component unmounted");
-    //     };
-    // }, []);
-
     useEffect(() => {
         if (onOpen && character) {
             setShowModal(true);

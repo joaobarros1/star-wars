@@ -9,7 +9,7 @@ const hardcodedCredentials = {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
     const [token, setToken] = useState(null);
 
     const login = useCallback((username, password) => {

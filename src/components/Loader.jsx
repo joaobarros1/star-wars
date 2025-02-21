@@ -1,6 +1,6 @@
 import { memo } from "react";
 import loaderIconUrl from "../assets/lightsaber.svg";
-import "./Loader.css";
+import "./loader.css";
 
 const Loader = () => {
     return (

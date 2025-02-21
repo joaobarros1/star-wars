@@ -3,6 +3,7 @@ import { AuthProvider, AuthContext } from "./context/AuthContext";
 import { DataProvider } from "./context/DataContext";
 import CharacterList from "./components/CharacterList";
 import Login from "./components/Login";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 const App = () => {
     const { isAuthenticated, logout } = useContext(AuthContext);
@@ -21,12 +22,17 @@ const App = () => {
     );
 };
 
+const queryClient = new QueryClient();
+
+
 const AppWrapper = () => (
-    <AuthProvider>
-        <DataProvider>
-            <App />
-        </DataProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+            <DataProvider>
+                <App />
+            </DataProvider>
+        </AuthProvider>
+    </QueryClientProvider>
 );
 
 export default AppWrapper;

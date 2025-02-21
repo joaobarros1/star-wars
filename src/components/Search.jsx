@@ -1,10 +1,16 @@
 import PropTypes from "prop-types";
 import "./search.css";
+import { useContext } from "react";
+import { DataContext } from "../context/DataContext";
 
-const Search = ({ onSearch }) => {
+const Search = () => {
+    const { searchCharacterName, setSearchCharacterName } =
+        useContext(DataContext);
+
     const handleInputChange = (e) => {
         const newQuery = e.target.value;
-        onSearch(newQuery);
+
+        setSearchCharacterName(newQuery);
     };
 
     return (
@@ -14,6 +20,7 @@ const Search = ({ onSearch }) => {
                 type="text"
                 onChange={handleInputChange}
                 placeholder="Search..."
+                value={searchCharacterName}
             />
         </div>
     );
