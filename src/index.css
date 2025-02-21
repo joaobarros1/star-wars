@@ -129,11 +129,6 @@ table {
     border-spacing: 0;
 }
 
-@font-face {
-    font-family: "Star Jedi";
-    src: url("/assets/fonts/Starjedi.ttf") format("truetype");
-}
-
 .app {
     display: flex;
     flex-direction: column;
@@ -147,11 +142,14 @@ table {
     position: absolute;
     top: 10px;
     right: 10px;
-    color: black;
+    color: white;
+    background-color: red;
     border: 1px solid #ccc;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .login-phrase {

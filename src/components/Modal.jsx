@@ -1,24 +1,33 @@
 import {
     memo,
     useCallback,
+    // useContext,
     useEffect,
     useMemo,
     useState,
-    // useContext,
 } from "react";
-import useFetch from "../hooks/useFetch";
-import Loader from "./Loader";
-import "./modal.css";
 import PropTypes from "prop-types";
-import starwarsLogo from "../assets/logo-placeholder.jpeg";
+import Loader from "./Loader";
+import useFetch from "../hooks/useFetch";
 // import { DataContext } from "../context/DataContext";
+import starwarsLogo from "../assets/logo-placeholder.jpeg";
+import "./modal.css";
 
 const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
-    // const { planets, setPlanets } = useContext(DataContext);
     const { data, loading, error } = useFetch(characterImageUrl);
     const [imageUrl, setImageUrl] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    // const { planets } = useContext(DataContext);
     const [planet, setPlanet] = useState(null);
+
+    console.log("modal", planet);
+
+    // useEffect(() => {
+    //     console.log("Modal component mounted");
+    //     return () => {
+    //         console.log("Modal component unmounted");
+    //     };
+    // }, []);
 
     useEffect(() => {
         if (onOpen && character) {
@@ -31,7 +40,6 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
         const response = await fetch(planetUrl);
         const planet = await response.json();
         setPlanet(planet);
-        // setPlanets((prevPlanets) => [...prevPlanets, planet]);
     }, [character.homeworld]);
 
     useEffect(() => {
@@ -121,7 +129,7 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
 
     return (
         <div className="modal-backdrop" onClick={handleBackdropClick}>
-            <div className="modal" ref={ref}>
+            <div className="modal">
                 <div className="modal-header">
                     <button className="modal-close" onClick={handleCloseModal}>
                         &times;
