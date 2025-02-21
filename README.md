@@ -25,8 +25,11 @@ Make sure you have Docker and Docker Compose installed on your machine.
 2. **Access the application:**
 
     Once the container is up and running, you can access the application by navigating to http://localhost:5173 in your web browser.
+    The credentials are:
+    - user
+    - password
 
-3. **Stoping the App:**
+4. **Stoping the App:**
 
     To stop the Docker container, press Ctrl+C in the terminal where docker-compose up is running, or run the following command in another terminal:
 
