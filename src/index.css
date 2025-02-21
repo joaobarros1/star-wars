@@ -133,3 +133,29 @@ table {
     font-family: "Star Jedi";
     src: url("/assets/fonts/Starjedi.ttf") format("truetype");
 }
+
+.app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: darkslategrey;
+}
+
+.logout-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-phrase {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}

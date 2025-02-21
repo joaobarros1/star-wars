@@ -1,12 +1,32 @@
+import { useContext } from "react";
+import { AuthProvider, AuthContext } from "./context/AuthContext";
 import { DataProvider } from "./context/DataContext";
 import CharacterList from "./components/CharacterList";
+import Login from "./components/Login";
 
-function App() {
+const App = () => {
+    const { isAuthenticated, logout } = useContext(AuthContext);
+
     return (
-        <DataProvider>
-            <CharacterList />
-        </DataProvider>
+        <main className="app">
+            {isAuthenticated ? (
+                <button className="logout-btn" onClick={logout}>
+                    Logout
+                </button>
+            ) : (
+                <p className="login-phrase">Please log in</p>
+            )}
+            {isAuthenticated ? <CharacterList /> : <Login />}
+        </main>
     );
-}
+};
 
-export default App;
+const AppWrapper = () => (
+    <AuthProvider>
+        <DataProvider>
+            <App />
+        </DataProvider>
+    </AuthProvider>
+);
+
+export default AppWrapper;

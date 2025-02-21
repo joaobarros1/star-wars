@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import CharacterCard from "./CharacterCard";
-import "./characterList.css";
 import Loader from "./Loader";
 import Modal from "./Modal";
 import { DataContext } from "../context/DataContext";
 import Search from "./Search";
 import Pagination from "./Pagination";
+import "./characterList.css";
 
 const charactersPerPage = 10;
 
