@@ -19,14 +19,12 @@ Make sure you have Docker and Docker Compose installed on your machine.
 
     Open your terminal and navigate to the root of your project, then run the following commands:
 
-    `docker-compose build`
+    `docker-compose build`\
     `docker-compose up`
-
-    Your application will be available in http://localhost/
 
 2. **Access the application:**
 
-    Once the container is up and running, you can access the application by navigating to http://localhost:5173 in your web browser.
+    Once the container is up and running, you can access the application by navigating to http://localhost in your web browser.
     The credentials are:
 
     - user
