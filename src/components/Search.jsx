@@ -1,16 +1,30 @@
 import PropTypes from "prop-types";
 import "./search.css";
-import { useContext } from "react";
+import { useContext, useCallback, useState, useEffect } from "react";
 import { DataContext } from "../context/DataContext";
+import debounce from "../utils/debounce";
 
 const Search = () => {
-    const { searchCharacterName, setSearchCharacterName } =
-        useContext(DataContext);
+    const { setSearchCharacterName } = useContext(DataContext);
+    const [query, setQuery] = useState("");
 
-    const handleInputChange = (e) => {
-        const newQuery = e.target.value;
+    const handleSearch = useCallback((searchQuery) => {
+        setSearchCharacterName(searchQuery);
+    }, []);
 
-        setSearchCharacterName(newQuery);
+    const debouncedSearch = useCallback(debounce(handleSearch, 300), [
+        handleSearch,
+    ]);
+
+    useEffect(() => {
+        if (query) {
+            debouncedSearch(query);
+        }
+    }, [query, debouncedSearch]);
+
+    const handleInputChange = (event) => {
+        const { value } = event.target;
+        setQuery(value);
     };
 
     return (
@@ -20,14 +34,15 @@ const Search = () => {
                 type="text"
                 onChange={handleInputChange}
                 placeholder="Search..."
-                value={searchCharacterName}
+                value={query}
             />
         </div>
     );
 };
 
 Search.propTypes = {
-    onSearch: PropTypes.func.isRequired,
+    searchCharacterName: PropTypes.string,
+    setSearchCharacterName: PropTypes.func.isRequired,
 };
 
 export default Search;
