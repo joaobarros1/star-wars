@@ -19,7 +19,7 @@ Make sure you have Docker and Docker Compose installed on your machine.
 
     Open your terminal and navigate to the root of your project, then run the following commands:
 
-    `docker-compose build`
+    `docker-compose build`\
     `docker-compose up`
 
     Your application will be available in http://localhost/
