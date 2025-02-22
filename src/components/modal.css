@@ -45,6 +45,10 @@
     text-align: start;
 }
 
+.info-attribute {
+    color: #ffe81f;
+}
+
 .modal-backdrop {
     position: fixed;
     top: 0;

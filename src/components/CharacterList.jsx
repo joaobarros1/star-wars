@@ -9,7 +9,8 @@ import Filters from "./Filters";
 import "./characterList.css";
 
 const CharacterList = () => {
-    const { characters, planets, loading, error } = useContext(DataContext);
+    const { characters, planets, charactersLoading, error } =
+        useContext(DataContext);
     const [activeCharacter, setActiveCharacter] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filteredCharacters, setFilteredCharacters] = useState(characters);
@@ -42,7 +43,7 @@ const CharacterList = () => {
             <Search />
             <Filters planets={planets} onFilterChange={handleFilterChange} />
             <section className="character-list">
-                {loading ? (
+                {charactersLoading ? (
                     <Loader />
                 ) : error ? (
                     <p>Error: Failed retrieving characters</p>

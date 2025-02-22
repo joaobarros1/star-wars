@@ -1,15 +1,7 @@
-import {
-    memo,
-    useCallback,
-    // useContext,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import Loader from "./Loader";
 import useFetch from "../hooks/useFetch";
-// import { DataContext } from "../context/DataContext";
 import starwarsLogo from "../assets/logo-placeholder.jpeg";
 import "./modal.css";
 
@@ -17,8 +9,6 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
     const { data, loading, error } = useFetch(characterImageUrl);
     const [imageUrl, setImageUrl] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    // const { planets } = useContext(DataContext);
-    const [planet, setPlanet] = useState(null);
 
     useEffect(() => {
         if (onOpen && character) {
@@ -26,21 +16,17 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
         }
     }, [onOpen, character]);
 
-    const fetchPlanetInfo = useCallback(async () => {
-        const planetUrl = character.homeworld;
-        const response = await fetch(planetUrl);
-        const planet = await response.json();
-        setPlanet(planet);
-    }, [character.homeworld]);
+    const { data: planetData, loading: planetLoading } = useFetch(
+        character.homeworld
+    );
 
     useEffect(() => {
         if (data && !loading) {
             setImageUrl(data[0]?.image || starwarsLogo);
-            fetchPlanetInfo();
         } else if (!loading && error) {
             setImageUrl(starwarsLogo);
         }
-    }, [data, loading, error, fetchPlanetInfo]);
+    }, [data, loading, error]);
 
     const handleCloseModal = useCallback(() => {
         setShowModal(false);
@@ -81,34 +67,41 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
                                 attr.slice(1).replace("_", " ")}
                             :{" "}
                         </span>
-                        <span>{character[attr]}</span>
+                        <span className="info-attribute">
+                            {character[attr]}
+                        </span>
                     </div>
                 ))}
                 <div>
                     <span>Number of films:</span>
-                    <span>{numberOfFilms}</span>
+                    <span className="info-attribute">{numberOfFilms}</span>
                 </div>
             </section>
         );
     }, [character]);
 
     const planetDetails = useMemo(() => {
-        const planetName = planet?.name;
+        const planetName = planetData?.name;
         const attributes = ["terrain", "climate", "population"];
         return (
             <section className="planet-details">
-                <span>Homeworld: {planetName}</span>
+                <span>
+                    Homeworld:{" "}
+                    <span className="info-attribute">{planetName}</span>
+                </span>
                 {attributes.map((attr) => (
                     <div key={attr}>
                         <span>
                             {attr.charAt(0).toUpperCase() + attr.slice(1)}:{" "}
                         </span>
-                        <span>{planet && planet[attr]}</span>
+                        <span className="info-attribute">
+                            {planetData && planetData[attr]}
+                        </span>
                     </div>
                 ))}
             </section>
         );
-    }, [planet]);
+    }, [planetData]);
 
     if (!showModal) return null;
 

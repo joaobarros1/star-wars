@@ -17,10 +17,8 @@ const Search = () => {
     ]);
 
     useEffect(() => {
-        if (query) {
-            debouncedSearch(query);
-        }
-    }, [query, debouncedSearch]);
+        debouncedSearch(query ?? "");
+    }, [query, debouncedSearch, handleSearch]);
 
     const handleInputChange = (event) => {
         const { value } = event.target;

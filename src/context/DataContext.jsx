@@ -12,8 +12,9 @@ export const DataProvider = ({ children }) => {
     const [totalPages, setTotalPages] = useState(1);
     const [selectedPlanet, setSelectedPlanet] = useState(null);
     const [searchCharacterName, setSearchCharacterName] = useState("");
+    const [totalScores, setTotalScores] = useState(0);
 
-    const { data: characters, loading } = useQuery({
+    const { data: characters, loading: charactersLoading } = useQuery({
         queryKey: ["characters", currentPage, searchCharacterName],
         queryFn: async () => {
             try {
@@ -21,13 +22,13 @@ export const DataProvider = ({ children }) => {
                     "https://swapi.dev/api/people",
                     {
                         params: {
-                            search: searchCharacterName,
-                            page: currentPage,
+                            search: searchCharacterName || undefined,
+                            page: searchCharacterName ? undefined : currentPage,
                             format: "json",
                         },
                     }
                 );
-
+                setTotalScores(data.count);
                 setTotalPages(Math.ceil(data.count / charactersPerPage));
 
                 return data.results;
@@ -68,12 +69,14 @@ export const DataProvider = ({ children }) => {
             value={{
                 characters,
                 planets,
-                loading,
+                charactersLoading,
                 currentPage,
                 setCurrentPage,
                 totalPages,
                 searchCharacterName,
                 setSearchCharacterName,
+                totalScores,
+                charactersPerPage,
             }}
         >
             {children}
