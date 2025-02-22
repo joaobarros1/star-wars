@@ -1,5 +1,5 @@
-# Use an official Node.js runtime as a parent image
-FROM node:20.18.3
+# Stage 1: Build the project
+FROM node:20-alpine AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -13,8 +13,17 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+# Build the project
+RUN npm run build
+
+# Stage 2: Serve the built files using nginx
+FROM nginx:alpine
+
+# Copy the built files from the previous stage
+COPY --from=builder /app/dist /usr/share/nginx/html
+
 # Expose the port the app runs on
-EXPOSE 5173
+EXPOSE 80
 
 # Command to run the app
-CMD ["npm", "run", "dev"]
+CMD ["nginx", "-g", "daemon off;"]
