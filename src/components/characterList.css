@@ -24,6 +24,12 @@
     margin: 0 auto;
 }
 
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .character-list {
+        max-width: 75%;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .character-list {
         max-width: 100%;
