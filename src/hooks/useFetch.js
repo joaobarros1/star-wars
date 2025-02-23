@@ -13,7 +13,7 @@ const useFetch = (url) => {
                 const response = await fetch(url);
                 const contentType = response.headers.get("Content-Type");
                 if (!response.ok) {
-                    throw new Error("Network response was not ok");
+                    throw new Error("Network problem");
                 }
                 if (contentType && contentType.includes("application/json")) {
                     const result = await response.json();

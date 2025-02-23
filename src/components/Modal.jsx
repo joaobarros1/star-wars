@@ -1,7 +1,15 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import {
+    memo,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 import PropTypes from "prop-types";
 import Loader from "./Loader";
 import useFetch from "../hooks/useFetch";
+import { DataContext } from "../context/DataContext";
 import starwarsLogo from "../assets/logo-placeholder.jpeg";
 import "./modal.css";
 
@@ -10,15 +18,15 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
     const [imageUrl, setImageUrl] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
+    const { planets } = useContext(DataContext);
+
+    const planet = planets.find((planet) => planet.url === character.homeworld);
+
     useEffect(() => {
         if (onOpen && character) {
             setShowModal(true);
         }
     }, [onOpen, character]);
-
-    const { data: planetData, loading: planetLoading } = useFetch(
-        character.homeworld
-    );
 
     useEffect(() => {
         if (data && !loading) {
@@ -81,7 +89,7 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
     }, [character]);
 
     const planetDetails = useMemo(() => {
-        const planetName = planetData?.name;
+        const planetName = planet?.name;
         const attributes = ["terrain", "climate", "population"];
         return (
             <section className="planet-details">
@@ -95,13 +103,13 @@ const Modal = ({ onOpen, character, characterImageUrl, onClose }) => {
                             {attr.charAt(0).toUpperCase() + attr.slice(1)}:{" "}
                         </span>
                         <span className="info-attribute">
-                            {planetData && planetData[attr]}
+                            {planet && planet[attr]}
                         </span>
                     </div>
                 ))}
             </section>
         );
-    }, [planetData]);
+    }, [planet]);
 
     if (!showModal) return null;
 

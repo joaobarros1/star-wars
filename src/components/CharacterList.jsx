@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import CharacterCard from "./CharacterCard";
 import Loader from "./Loader";
 import Modal from "./Modal";
@@ -15,6 +15,10 @@ const CharacterList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [filteredCharacters, setFilteredCharacters] = useState(characters);
 
+    useEffect(() => {
+        setFilteredCharacters(characters);
+    }, [characters]);
+
     const handleCardClick = (character) => {
         setActiveCharacter(character);
         setIsModalOpen(true);
@@ -24,15 +28,13 @@ const CharacterList = () => {
         setIsModalOpen(false);
     };
 
-    const handleFilterChange = (planetName) => {
-        if (planetName === "") {
+    const handleFilterChange = (planetUrl) => {
+        if (planetUrl === "") {
             setFilteredCharacters(characters);
         } else {
             const filteredData = characters.filter(
-                (character) => character.homeworld === planetName
+                (character) => character.homeworld === planetUrl
             );
-            // console.log("Filtered data:", filteredData);
-            // console.log("Characters:", characters);
             setFilteredCharacters(filteredData);
         }
     };
@@ -48,7 +50,7 @@ const CharacterList = () => {
                 ) : error ? (
                     <p>Error: Failed retrieving characters</p>
                 ) : (
-                    characters.map((character) => (
+                    filteredCharacters.map((character) => (
                         <CharacterCard
                             key={character.name}
                             character={character}

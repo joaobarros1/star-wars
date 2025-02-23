@@ -6,7 +6,7 @@ const Filters = ({ planets, onFilterChange }) => {
             <select onChange={(e) => onFilterChange(e.target.value)}>
                 <option value="">All Planets</option>
                 {planets.map((planet) => (
-                    <option key={planet.name} value={planet.name}>
+                    <option key={planet.name} value={planet.url}>
                         {planet.name}
                     </option>
                 ))}
