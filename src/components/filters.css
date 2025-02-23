@@ -1,0 +1,37 @@
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.filter-pages-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.filter-btn-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.filter-btn-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-btn-container button:hover {
+    background-color: #0056b3;
+}

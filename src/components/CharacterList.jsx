@@ -39,8 +39,6 @@ const CharacterList = () => {
         }
     };
 
-    console.log("loading", charactersLoading);
-
     return (
         <div className="character-list-container">
             <h1 className="list-title">Star Wars</h1>

@@ -8,19 +8,18 @@ export const DataContext = createContext();
 export const DataProvider = ({ children }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [planetPage, setPlanetPage] = useState(1);
-    const [totalCharactersPages, setTotalCharactersPages] = useState(0);
+    const [totalCharactersPages, setTotalCharactersPages] = useState(1);
+    const [totalPlanetsPages, setTotalPlanetsPages] = useState(1);
     const [searchCharacterName, setSearchCharacterName] = useState("");
     const [totalCharactersScores, setTotalCharactersScores] = useState(0);
     const [totalPlanetsScores, setTotalPlanetsScores] = useState(0);
     const [charactersPerPage, setCharactersPerPage] = useState(0);
     const [planetsPerPage, setPlanetsPerPage] = useState(0);
-    const [totalPlanetsPages, setTotalPlanetsPages] = useState(0);
 
     const { data: characters, isLoading: charactersLoading } = useQuery({
         queryKey: ["characters", currentPage, searchCharacterName],
         queryFn: async () => {
             try {
-                console.log("isLoading", charactersLoading);
                 const { data } = await axios.get(
                     "https://swapi.dev/api/people",
                     {
