@@ -5,19 +5,22 @@ import axios from "axios";
 
 export const DataContext = createContext();
 
-const charactersPerPage = 10;
-
 export const DataProvider = ({ children }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [selectedPlanet, setSelectedPlanet] = useState(null);
+    const [planetPage, setPlanetPage] = useState(1);
+    const [totalCharactersPages, setTotalCharactersPages] = useState(0);
     const [searchCharacterName, setSearchCharacterName] = useState("");
-    const [totalScores, setTotalScores] = useState(0);
+    const [totalCharactersScores, setTotalCharactersScores] = useState(0);
+    const [totalPlanetsScores, setTotalPlanetsScores] = useState(0);
+    const [charactersPerPage, setCharactersPerPage] = useState(0);
+    const [planetsPerPage, setPlanetsPerPage] = useState(0);
+    const [totalPlanetsPages, setTotalPlanetsPages] = useState(0);
 
-    const { data: characters, loading: charactersLoading } = useQuery({
+    const { data: characters, isLoading: charactersLoading } = useQuery({
         queryKey: ["characters", currentPage, searchCharacterName],
         queryFn: async () => {
             try {
+                console.log("isLoading", charactersLoading);
                 const { data } = await axios.get(
                     "https://swapi.dev/api/people",
                     {
@@ -28,8 +31,11 @@ export const DataProvider = ({ children }) => {
                         },
                     }
                 );
-                setTotalScores(data.count);
-                setTotalPages(Math.ceil(data.count / charactersPerPage));
+                setTotalCharactersScores(data.count);
+                setCharactersPerPage(data.results?.length);
+                setTotalCharactersPages(
+                    Math.ceil(data.count / data.results?.length)
+                );
 
                 return data.results;
             } catch (err) {
@@ -40,19 +46,23 @@ export const DataProvider = ({ children }) => {
         initialData: [],
     });
 
-    const { data: planets, loading: planetsLoading } = useQuery({
-        queryKey: ["planets", currentPage],
+    const { data: planets, isPending: planetsLoading } = useQuery({
+        queryKey: ["planets", planetPage],
         queryFn: async () => {
             try {
                 const { data } = await axios.get(
                     "https://swapi.dev/api/planets",
                     {
                         params: {
-                            page: 1,
-                            // page: currentPage,
+                            page: planetPage,
                             format: "json",
                         },
                     }
+                );
+                setTotalPlanetsScores(data.count);
+                setPlanetsPerPage(data.results?.length);
+                setTotalPlanetsPages(
+                    Math.ceil(data.count / data.results?.length)
                 );
 
                 return data.results;
@@ -72,11 +82,17 @@ export const DataProvider = ({ children }) => {
                 charactersLoading,
                 currentPage,
                 setCurrentPage,
-                totalPages,
+                planetPage,
+                setPlanetPage,
+                totalCharactersPages,
                 searchCharacterName,
                 setSearchCharacterName,
-                totalScores,
+                totalCharactersScores,
                 charactersPerPage,
+                totalPlanetsScores,
+                planetsPerPage,
+                totalPlanetsPages,
+                planetsLoading,
             }}
         >
             {children}

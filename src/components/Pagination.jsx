@@ -7,14 +7,14 @@ const Pagination = () => {
     const {
         currentPage,
         setCurrentPage,
-        totalPages,
-        totalScores,
+        totalCharactersPages,
+        totalCharactersScores,
         charactersPerPage,
     } = useContext(DataContext);
 
     return (
         <div className="pagination">
-            {totalPages > 1 && (
+            {totalCharactersPages > 1 && (
                 <button
                     className="pagination-btn"
                     onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
@@ -24,14 +24,15 @@ const Pagination = () => {
                 </button>
             )}
             <span>
-                Page {totalScores < charactersPerPage ? 1 : currentPage} of{" "}
-                {totalPages}
+                Page{" "}
+                {totalCharactersScores < charactersPerPage ? 1 : currentPage} of{" "}
+                {totalCharactersPages}
             </span>
-            {totalPages > 1 && (
+            {totalCharactersPages > 1 && (
                 <button
                     className="pagination-btn"
                     onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
-                    disabled={currentPage === totalPages}
+                    disabled={currentPage === totalCharactersPages}
                 >
                     Next
                 </button>
@@ -42,7 +43,7 @@ const Pagination = () => {
 
 Pagination.propTypes = {
     currentPage: PropTypes.number.isRequired,
-    totalPages: PropTypes.number.isRequired,
+    totalCharactersPages: PropTypes.number.isRequired,
     onPageChange: PropTypes.func.isRequired,
 };
 
