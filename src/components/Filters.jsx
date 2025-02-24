@@ -19,10 +19,10 @@ const Filters = ({ onFilterChange }) => {
 
     return (
         <div className="filter-container">
-            {planetsLoading ? (
-                <Loader />
-            ) : (
-                <section className="filter-section">
+            <section className="filter-section">
+                {planetsLoading ? (
+                    <Loader />
+                ) : (
                     <div className="filter-btn-container">
                         {planets.map((planet) => (
                             <button
@@ -34,24 +34,24 @@ const Filters = ({ onFilterChange }) => {
                             </button>
                         ))}
                     </div>
-                    <div className="filter-pages-container">
-                        <label htmlFor="planetsPages">Planets page:</label>
-                        <input
-                            id="planetsPages"
-                            type="number"
-                            min="1"
-                            max={totalPlanetsPages.toString()}
-                            onChange={(e) => onPageChange(e.target.value)}
-                            value={planetPage}
-                        />
-                    </div>
-                    <div className="filter-btn-container">
-                        <button onClick={() => onFilterChange("")}>
-                            All planets
-                        </button>
-                    </div>
-                </section>
-            )}
+                )}
+                <div className="filter-pages-container">
+                    <label htmlFor="planetsPages">Planets page:</label>
+                    <input
+                        id="planetsPages"
+                        type="number"
+                        min="1"
+                        max={totalPlanetsPages.toString()}
+                        onChange={(e) => onPageChange(e.target.value)}
+                        value={planetPage}
+                    />
+                </div>
+                <div className="filter-btn-container">
+                    <button onClick={() => onFilterChange("")}>
+                        All planets
+                    </button>
+                </div>
+            </section>
         </div>
     );
 };

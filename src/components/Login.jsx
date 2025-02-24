@@ -18,7 +18,7 @@ const Login = () => {
     return (
         <section className="login-container">
             <form onSubmit={handleLogin}>
-                <div>
+                <div className="login-input">
                     <label>Username:</label>
                     <input
                         type="text"
@@ -26,7 +26,7 @@ const Login = () => {
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
-                <div>
+                <div className="login-input">
                     <label>Password:</label>
                     <input
                         type="password"
@@ -35,9 +35,11 @@ const Login = () => {
                     />
                 </div>
                 {error && <p className="error">{error}</p>}
-                <button className="login-btn" type="submit">
-                    Login
-                </button>
+                <div className="login-btn">
+                    <button className="login-btn" type="submit">
+                        Login
+                    </button>
+                </div>
             </form>
         </section>
     );
