@@ -1,7 +1,7 @@
+import { memo, useContext } from "react";
 import { PropTypes } from "prop-types";
-import "./pagination.css";
-import { useContext } from "react";
 import { DataContext } from "../context/DataContext";
+import "./pagination.css";
 
 const Pagination = () => {
     const {
@@ -47,4 +47,4 @@ Pagination.propTypes = {
     onPageChange: PropTypes.func.isRequired,
 };
 
-export default Pagination;
+export default memo(Pagination);

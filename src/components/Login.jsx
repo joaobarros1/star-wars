@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, memo } from "react";
 import { AuthContext } from "../context/AuthContext";
 import "./login.css";
 
@@ -45,4 +45,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default memo(Login);

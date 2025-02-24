@@ -1,5 +1,5 @@
+import { memo, useContext } from "react";
 import PropTypes from "prop-types";
-import { useContext } from "react";
 import { DataContext } from "../context/DataContext";
 import Loader from "./Loader";
 import "./filters.css";
@@ -61,4 +61,4 @@ Filters.propTypes = {
     onFilterChange: PropTypes.func.isRequired,
 };
 
-export default Filters;
+export default memo(Filters);

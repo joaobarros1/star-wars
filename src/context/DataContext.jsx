@@ -43,6 +43,7 @@ export const DataProvider = ({ children }) => {
             }
         },
         initialData: [],
+        refetchOnWindowFocus: false,
     });
 
     const { data: planets, isFetching: planetsLoading } = useQuery({
@@ -71,6 +72,7 @@ export const DataProvider = ({ children }) => {
             }
         },
         initialData: [],
+        refetchOnWindowFocus: false,
     });
 
     return (

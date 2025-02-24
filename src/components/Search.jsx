@@ -1,8 +1,8 @@
+import { useContext, useCallback, useState, useEffect, memo } from "react";
 import PropTypes from "prop-types";
-import "./search.css";
-import { useContext, useCallback, useState, useEffect } from "react";
 import { DataContext } from "../context/DataContext";
 import debounce from "../utils/debounce";
+import "./search.css";
 
 const Search = () => {
     const { setSearchCharacterName } = useContext(DataContext);
@@ -43,4 +43,4 @@ Search.propTypes = {
     setSearchCharacterName: PropTypes.func.isRequired,
 };
 
-export default Search;
+export default memo(Search);

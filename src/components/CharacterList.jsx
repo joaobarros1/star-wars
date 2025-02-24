@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, memo } from "react";
 import CharacterCard from "./CharacterCard";
 import Loader from "./Loader";
 import Modal from "./Modal";
@@ -74,4 +74,4 @@ const CharacterList = () => {
     );
 };
 
-export default CharacterList;
+export default memo(CharacterList);
