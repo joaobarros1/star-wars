@@ -47,7 +47,7 @@ const Filters = ({ onFilterChange }) => {
                     </div>
                     <div className="filter-btn-container">
                         <button onClick={() => onFilterChange("")}>
-                            Clear filters
+                            All planets
                         </button>
                     </div>
                 </section>

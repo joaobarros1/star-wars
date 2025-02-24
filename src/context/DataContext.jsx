@@ -16,7 +16,7 @@ export const DataProvider = ({ children }) => {
     const [charactersPerPage, setCharactersPerPage] = useState(0);
     const [planetsPerPage, setPlanetsPerPage] = useState(0);
 
-    const { data: characters, isLoading: charactersLoading } = useQuery({
+    const { data: characters, isFetching: charactersLoading } = useQuery({
         queryKey: ["characters", currentPage, searchCharacterName],
         queryFn: async () => {
             try {
@@ -45,7 +45,7 @@ export const DataProvider = ({ children }) => {
         initialData: [],
     });
 
-    const { data: planets, isPending: planetsLoading } = useQuery({
+    const { data: planets, isFetching: planetsLoading } = useQuery({
         queryKey: ["planets", planetPage],
         queryFn: async () => {
             try {
